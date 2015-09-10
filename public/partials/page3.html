@@ -1,0 +1,32 @@
+<div class="container" ng-controller="Page3Ctrl">
+  <div class="page-header">
+    <h3>List of products from the REST API 
+        <code>/api/v1/products</code>
+    </h3>
+  </div>
+
+<!--
+  <p class="lead">Demo a simple factory
+    <code>todosFactory</code> <a href="http://thejackalofjavascript.com/mean-stack-hands-on-tutorial" target="_blank">source</a>
+  </p>
+-->
+
+  <p class="lead">
+    <table class="table table-striped">
+     <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    <tr ng-repeat="p in products">
+        
+            <td>{{p.id}}</td>    
+            <td>{{p.name}}</td>
+        
+        <td><button ng-click="testes(p.id)">test</button></td>
+    </tr>    
+        
+        
+    </table>
+  </p>
+
+</div>
