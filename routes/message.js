@@ -49,6 +49,8 @@ var user = {
     },
 
     insert: function (req, res) {
+    var teste = req.body.test;
+        console.log(teste);
       var message = { 'message': 'Hello, Bluemix', 'ts': new Date() };
       if (db && db !== "null" && db !== "undefined") {
         db.collection('messages').insert(message, {safe:true}, function(err){
@@ -72,7 +74,7 @@ var user = {
     display: function (req, res) {
       if (db && db !== "null" && db !== "undefined") {
         // list messages
-        db.collection('messages').find({}, {limit:10, sort:[['_id', 'desc']]}, function(err, cursor) {
+        db.collection('messages').find({}, {sort:[['_id', 'desc']]}, function(err, cursor) {
           if (err) {
             console.log(err.stack); 
             res.write('mongodb message list failed');
@@ -84,10 +86,8 @@ var user = {
                 res.write('mongodb cursor to array failed');
                 res.end();
               } else {
-                res.writeHead(200, {'Content-Type': 'text/plain'});
-                for (i=0; i < items.length; i++) {
-                  res.write(JSON.stringify(items[i]) + "\n");
-                }
+                res.send(items);
+
                 res.end();
               }
             });

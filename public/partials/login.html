@@ -1,5 +1,5 @@
 <legend>Login Form</legend>
-
+<div ng-controller="LoginCtrl">
 <div class="form-group">
     <label for="username">Username</label>
     <input type="text" class="form-control" id="username" placeholder="Username" ng-model="user.username">
@@ -10,10 +10,15 @@
     <input type="password" class="form-control" id="password" placeholder="password" ng-model="user.password">
 </div>
 
-<button type="button" ng-click="login()" class="btn btn-primary">Submit</button>
+<button type="button" ng-click="login()" class="btn btn-primary" ladda="submitting" data-style="expand-right">Submit</button>
+<!--
+<button class="btn btn-primary"
+			        ladda="submitting"
+			        data-style="expand-right"
+							type="submit">
+				<span ng-show="submitting">Registering</span>
+				<span ng-show="!submitting">Register</span>
+			</button>
+-->
 
-<br />
-Name:<input type="text" id="reg_name" ng-model="userToAdd.name">
-Username:<input type="text" id="reg_user" ng-model="userToAdd.username">
-Password:<input type="password" id="reg_pass" ng-model="userToAdd.password">
-<button type="button" ng-click="createUser()" class="btn btn-primary">Submit</button>
+</div>

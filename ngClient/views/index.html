@@ -2,13 +2,16 @@
 <html lang="en" ng-app="mongobm">
 <head >
 	<title >User Feedback</title >
+	<link href="/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+	<link href="/libs/ladda/dist/ladda-themeless.min.css" rel="stylesheet" >
     <link href="/libs/css/main.css" rel="stylesheet" >
-	<link href="/libs/css/bootstrap.min.css" rel="stylesheet" >
-<!--	<link href="/libs/ladda/dist/ladda-themeless.min.css" rel="stylesheet" >-->
-    <script src="/javascript/test.js"></script>  
-    <script src="/libs/js/angular.min.js" ></script >
 
-      <script type="text/javascript" src="libs/js/angular-route.min.js"></script>
+    <script src="/javascript/test.js"></script>  
+
+    
+
+    
+
 
 </head >
 
@@ -17,8 +20,8 @@
  <div ng-include="'/partials/header.html'"></div>
     <div class="container main-content" ng-controller="MongoBmCtrl">
   <div class="container" ng-view></div>
-    <button ng-click="test()">TESTE</button>
-    <p ng-model="testResp">{{testResp}}</p>
+        		
+
 
   <div ng-include="'/partials/footer.html'"></div>
 
@@ -120,14 +123,18 @@
 </div >
 
 
-<!--
-<script src="../libs/angular-auto-validate/dist/jcs-auto-validate.min.js" ></script >
-<script src="../libs/ladda/dist/spin.min.js" ></script >
-<script src="../libs/ladda/dist/ladda.min.js" ></script >
-<script src="../libs/angular-ladda/dist/angular-ladda.min.js" ></script >
--->
+    
+    <script src="/libs/js/angular.min.js" ></script >
+    <script src="/libs/js/angular-route.min.js"></script>  
+    <script src="/controllers/main.js" ></script >
 
-<script src="/controllers/main.js" ></script >
+    <script src="/js/auth.controller.js"></script>  
+    <script src="/js/auth.factory.js"></script>  
+
+      <script  src="libs/ladda/dist/spin.min.js"></script>
+      <script  src="libs/ladda/dist/ladda.min.js"></script>
+      <script  src="libs/angular-ladda/dist/angular-ladda.min.js"></script>
+
 
 
 </body >

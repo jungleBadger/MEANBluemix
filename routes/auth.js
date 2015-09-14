@@ -3,11 +3,11 @@ var jwt = require('jwt-simple');
 var auth = {
  
   login: function(req, res) {
- console.log("entrou login");
+    console.log("entrou login");
     var username = req.body.username || '';
     var password = req.body.password || '';
  
-      console.log(username);
+      console.log("username: "+username);
     if (username == '' || password == '') {
       res.status(401);
       res.json({
