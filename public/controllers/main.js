@@ -8,18 +8,21 @@ app.config(function($routeProvider, $httpProvider) {
     $routeProvider
         .when('/login', {
             templateUrl: 'partials/login.html',
-            controller: 'LoginCtrl'  
+            controller: 'LoginCtrl',
+            access: {
+                requiredLogin: false
+            } 
         }).when('/page1', {
             templateUrl: 'partials/page1.html',
-            controller: 'Page1Ctrl'
-        }).when('/', {
-            templateUrl: '/partials/login.html',
-            controller: 'LoginCtrl'
+            controller: 'Page1Ctrl',
+        access: {
+            requiredLogin: true
+            }
+        }).otherwise({
+            redirectTo: '/login'
         });
+        
 });
-    
-    
-
     
     
 app.controller('MongoBmCtrl', function ($scope, $http) {
@@ -31,28 +34,22 @@ app.controller('MongoBmCtrl', function ($scope, $http) {
 });
     
     
-app.controller("HeaderCtrl", ['$scope', '$location',
-  function($scope, $location) {
+app.controller("HeaderCtrl", ['$scope', '$location', 'UserAuthFactory',
+  function($scope, $location, UserAuthFactory) {
  
     $scope.isActive = function(route) {
         return route === $location.path();
+    }
+    
+    $scope.logout = function () {
+        UserAuthFactory.logout();
     }
   }
 ]);    
       
 app.controller("HomeCtrl", ['$scope', '$http',
   function($scope, $http) {
- 
-      $scope.insert = function () {
-        console.log($http.get('http://localhost:3000/api/insertmessage', {'teste' : '12355'}));    
-        console.log($http.get('http://testeapp.w3ibm.mybluemix.net/api/insertmessage'));    
-      }
-      
-      $scope.delete = function () {
-        console.log($http.post('http://localhost:3000/api/delete'));  
-        console.log($http.post('http://testeapp.w3ibm.mybluemix.net/api/delete'));    
-      }
- 
+  
     $scope.isActive = function(route) {
       return route === $location.path();
     }

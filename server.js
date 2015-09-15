@@ -1,32 +1,32 @@
+//Dependencies
 var express = require('express');
-//var favicon = require('serve-favicon');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//var db = require('./middlewares/dbConnection.js');
 
+//Index of the routes
 var routes = require('./routes/index');
 
 // setup middleware
 var app = express();
-//
+//setting up the frameworks
 app.use(logger('dev'));
 app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
+app.use(bodyParser.urlencoded({
     extended: true
   }));
-  app.use(cookieParser());
+app.use(cookieParser());
  
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.errorHandler());
 app.use(express.static(__dirname + '/public')); //setup static public directory
+//Set up the view engine, and ejs to render html
 app.set('view engine', 'html');
- app.engine('html', require('ejs').renderFile);
-app.set('views', __dirname + '/views'); //optional since express defaults to CWD/views
+app.engine('html', require('ejs').renderFile);
 
 app.all('/*', function(req, res, next) {
-    // CORS headers
+    //Set up CORS headers
     res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     // Set custom headers for CORS
@@ -35,15 +35,13 @@ app.all('/*', function(req, res, next) {
     if (req.method == 'OPTIONS') {
         res.status(200).end();
     } else {
-
         next();
     }
 });
 
+//Link the validation control to the routes
 app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
-/*jshint node:true*/
 app.use('/', routes);
-
 
 // There are many useful environment variables available in process.env.
 // VCAP_APPLICATION contains useful information about a deployed application.
@@ -63,4 +61,3 @@ var port = (process.env.VCAP_APP_PORT || 3000);
 // Start server
 app.listen(port, host);
 console.log('App started on port ' + port);
-

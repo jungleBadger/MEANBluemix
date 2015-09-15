@@ -3,12 +3,11 @@ var app = angular.module('auth.controller', [])
 app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory',
   function($scope, $window, $location, UserAuthFactory, AuthenticationFactory) {
     $scope.user = {
-      username: 'arvind@myApp.com',
-      password: 'pass123'
+      username: '',
+      password: ''
     };
  
-      
-      
+    
       
     $scope.login = function() {
     $scope.submitting = true;
