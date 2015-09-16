@@ -1,10 +1,10 @@
 //Dependencies
 var express = require('express');
 var path = require('path');
+var favicon = require('serve-favicon')
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 //Index of the routes
 var routes = require('./routes/index');
 
@@ -21,16 +21,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.errorHandler());
 app.use(express.static(__dirname + '/public')); //setup static public directory
+
 //Set up the view engine, and ejs to render html
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
-
+//
 app.all('/*', function(req, res, next) {
     //Set up CORS headers
     res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     // Set custom headers for CORS
-    res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-type,Accept,X-Access-Token,X-Key');
 
     if (req.method == 'OPTIONS') {
         res.status(200).end();
@@ -38,6 +39,10 @@ app.all('/*', function(req, res, next) {
         next();
     }
 });
+
+
+
+
 
 //Link the validation control to the routes
 app.all('/api/v1/*', [require('./middlewares/validateRequest')]);

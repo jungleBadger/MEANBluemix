@@ -2,9 +2,9 @@
 var app = angular.module('mongobm', ['ngRoute', 'angular-ladda', 'auth.factory', 'auth.controller']);
 
 app.config(function($routeProvider, $httpProvider) {
-    
-    $httpProvider.interceptors.push('TokenInterceptor');
 
+    $httpProvider.interceptors.push('TokenInterceptor');
+    
     $routeProvider
         .when('/login', {
             templateUrl: 'partials/login.html',
@@ -53,26 +53,72 @@ app.controller("HomeCtrl", ['$scope', '$http',
     $scope.isActive = function(route) {
       return route === $location.path();
     }
-
   }
                             
 ]);
-
     
-app.controller("Page1Ctrl", ['$scope', '$http',
-                            function($scope, $http) {
+app.controller("Page1Ctrl", ['$scope', '$window', '$http',
+                            function($scope, $window, $http) {
+                
+                /*************************/
+                // API Calls variables  //
+                //***********************/                                                    
+                    var email = $window.sessionStorage.user+'@br.ibm.com';
+                    var client_id = 'cf31d182-1732-4984-845f-285a867d93a4';    
+                    
+                /******************************/
+                // Render All messages        //
+                // GET method when called     // 
+                //*****************************/                                    
+                    $scope.messages = [];
+                    $http.get('/api/v1/render').then(
+                        function(response) {
+                            $scope.messages = response.data;
+                        }, function(response) {
+                            console.log('failed render');
+                        });
                                 
-                                $scope.messages = [];
-                                $http.get('http://localhost:3000/api/v1/render').then(
-                                    function(response) {
-                                        $scope.messages = response.data;
-                                        console.log($scope.messages);
-                                    }, function(response) {
-                                        alert();
-                                    });
+                /******************************/
+                // Render /about from IBMAPI  //
+                // GET method when called     // 
+                //*****************************/                                                
+                    $http.get('https://w3.api.ibm.com/common/run/bluepages/about').then(
+                        function(response) {
+                            $scope.testApi = response.data;
+                        }, function(response) {
+                            console.log("failed about");
+                        });
+
+                /*********************************/
+                // Render photo by intranet id   //
+                // This method doesnt get called //
+                // the image is already resolved // 
+                //********************************/                                    
+                
+                    var photoHandler = document.getElementById("userPhoto");
+                    photoHandler.src = 'https://eapim.w3ibm.mybluemix.net/common/run/bluepages/'+
+                        'photo?client_id='+client_id+'&email='+email;
+                
+                /**************************************/
+                // Render emp info (pass id in header)//
+                // GET method when called             // 
+                //*************************************/                                    
+                    var req = {
+                        method: 'GET',                                                                                                                           url:'https://eapim.w3ibm.mybluemix.net/common/run/bluepages/email/'+email+'/'+
+                                    'callupname&preferredidentity&dept',
+                        headers: {
+                            'Content-Type': "text/plain",
+                            'X-IBM-Client-Id': client_id
                             }
+                        }            
+                    $http(req).then(function(response){
+                        $scope.userInfo = {};
+                        $scope.userInfo = response.data.search.entry[0].attribute;
+                    }, function(response) {
+                        console.log(response);
+                    });
+            }                             
 ]);
-    
     
  app.run(function($rootScope, $window, $location, AuthenticationFactory) {
     AuthenticationFactory.check();
@@ -90,7 +136,6 @@ app.controller("Page1Ctrl", ['$scope', '$http',
         }
     });
     
-    
   $rootScope.$on('$routeChangeSuccess', function(event, nextRoute, currentRoute) {
     $rootScope.showMenu = AuthenticationFactory.isLogged;
     $rootScope.role = AuthenticationFactory.userRole;
@@ -101,6 +146,4 @@ app.controller("Page1Ctrl", ['$scope', '$http',
   });
 });
   
-    
 })();
-

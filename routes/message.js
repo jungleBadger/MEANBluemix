@@ -22,6 +22,8 @@ if (mongo) {
   conn_str = 'mongodb://localhost:27017';
 }
 
+
+
 var MongoClient = require('mongodb').MongoClient;
 var db; 
 MongoClient.connect(conn_str, function(err, database) {
@@ -41,9 +43,9 @@ var user = {
     insert: function (req, res) {
         var teste = req.body.test;
         console.log(teste);
-        var message = { 'message': 'test', 'ts': new Date() };
+        var message = { 'username': 'test', 'password': '123', 'ts': new Date() };
         if (db && db !== "null" && db !== "undefined") {
-            db.collection('messages').insert(message, {safe:true}, function(err){
+            db.collection('users').insert(message, {safe:true}, function(err){
                 if (err) { 
                     res.write('mongodb message insert failed' + err.stack);
                     res.end(); 
@@ -105,7 +107,8 @@ var user = {
                 }
             });
         }
-    }
+    },
+    
 
 }
 

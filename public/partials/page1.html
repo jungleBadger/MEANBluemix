@@ -3,6 +3,31 @@
     <h3>Rendering all the messages</h3>
   </div>
 
+              <img id="userPhoto" src="#" class="img-circle">
+
+ <table class="table table-condensed">
+	<thead>
+		<tr>
+			<th>Preferred identity</th>
+			<th>Callup name</th>
+			<th>Dept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td ng-repeat="info in userInfo" ng-if="info.name == 'preferredidentity'">
+				{{info.value[0]}}
+            </td>
+			<td ng-repeat="info in userInfo" ng-if="info.name == 'callupname'">
+				{{info.value[0]}}
+            </td>
+			<td ng-repeat="info in userInfo" ng-if="info.name == 'dept'">
+				{{info.value[0]}}
+            </td>
+		</tr>
+	</tbody>
+</table>
+
     <table class="table table-bordered">
        <th>Message</th>
         <th>Timestamp</th>
@@ -13,6 +38,7 @@
     </table>
         <button ng-click="testRtrn()">teste</button>
 
+    <pre>{{testApi}}</pre>
 
   <print-this></print-this>
 
