@@ -43,7 +43,7 @@ var user = {
     insert: function (req, res) {
         var teste = req.body.test;
         console.log(teste);
-        var message = { 'username': 'test', 'password': '123', 'ts': new Date() };
+        var message = { 'username': 'mateusp', 'password': '123', 'ts': new Date() };
         if (db && db !== "null" && db !== "undefined") {
             db.collection('users').insert(message, {safe:true}, function(err){
                 if (err) { 

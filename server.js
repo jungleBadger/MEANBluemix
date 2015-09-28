@@ -25,6 +25,7 @@ app.use(express.static(__dirname + '/public')); //setup static public directory
 //Set up the view engine, and ejs to render html
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
+
 //
 app.all('/*', function(req, res, next) {
     //Set up CORS headers
@@ -39,9 +40,6 @@ app.all('/*', function(req, res, next) {
         next();
     }
 });
-
-
-
 
 
 //Link the validation control to the routes

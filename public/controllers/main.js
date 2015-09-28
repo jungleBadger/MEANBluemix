@@ -94,15 +94,16 @@ app.controller("Page1Ctrl", ['$scope', '$window', '$http',
                 // This method doesnt get called //
                 // the image is already resolved // 
                 //********************************/                                    
-                
+                'https://eapim.w3ibm.mybluemix.net/common/run/bluepages/photo?client_id=cf31d182-1732-4984-845f-285a867d93a4&email=dcerag@br.ibm.com'
+                                
                     var photoHandler = document.getElementById("userPhoto");
                     photoHandler.src = 'https://eapim.w3ibm.mybluemix.net/common/run/bluepages/'+
                         'photo?client_id='+client_id+'&email='+email;
                 
-                /**************************************/
-                // Render emp info (pass id in header)//
-                // GET method when called             // 
-                //*************************************/                                    
+                /*******************************************/
+                // Render employee info (sent id via header)//
+                // GET method when called                  // 
+                //******************************************/                                    
                     var req = {
                         method: 'GET',                                                                                                                           url:'https://eapim.w3ibm.mybluemix.net/common/run/bluepages/email/'+email+'/'+
                                     'callupname&preferredidentity&dept',
@@ -117,6 +118,9 @@ app.controller("Page1Ctrl", ['$scope', '$window', '$http',
                     }, function(response) {
                         console.log(response);
                     });
+                              
+                                 
+
             }                             
 ]);
     
